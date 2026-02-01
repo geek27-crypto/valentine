@@ -111,12 +111,22 @@
 <body>
 
   <div class="card">
-    <h1>Will you be my Valentine? 💖</h1>
+   <h1 id="mainText">Will you be my Valentine? 💖</h1>
 
-    <div class="buttons">
-      <button id="yesBtn">Yes ❤️</button>
-      <button id="noBtn">No 🙃</button>
-    </div>
+<div class="buttons" id="buttons">
+  <button id="yesBtn">Yes ❤️</button>
+  <button id="noBtn">No 🙃</button>
+</div>
+
+<p id="finalMessage" style="
+  display:none;
+  margin-top:20px;
+  font-size:18px;
+  color:#e91e63;
+  font-weight:bold;
+">
+  I choose you. Today, tomorrow, always ❤️
+</p>
   </div>
 
   <!-- Pop-up -->
@@ -171,8 +181,16 @@
     });
 
     function closePopup() {
-      popup.style.display = "none";
-    }
+  popup.style.display = "none";
+
+  // Second surprise ✨
+  document.getElementById("buttons").style.display = "none";
+  document.getElementById("mainText").textContent = "She said YES 💖";
+  document.getElementById("finalMessage").style.display = "block";
+
+  // Extra confetti burst
+  confetti({ particleCount: 150, spread: 100 });
+}
   </script>
 
 </body>
