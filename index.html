@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Be My Valentine ❤️</title>
 
+  <!-- Confetti -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
   <style>
@@ -27,6 +28,7 @@
       box-shadow: 0 25px 50px rgba(0,0,0,0.25);
       max-width: 360px;
       width: 90%;
+      z-index: 2;
     }
 
     h1 {
@@ -62,17 +64,46 @@
       position: absolute;
       font-size: 30px;
       animation: float 4s linear infinite;
+      z-index: 1;
     }
 
     @keyframes float {
       from {
-        transform: translateY(100vh);
+        transform: translateY(100vh) rotate(0deg);
         opacity: 1;
       }
       to {
-        transform: translateY(-10vh);
+        transform: translateY(-10vh) rotate(360deg);
         opacity: 0;
       }
+    }
+
+    /* Pop-up styles */
+    #popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    #popupContent {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 320px;
+      animation: pop 0.3s ease;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
@@ -88,17 +119,44 @@
     </div>
   </div>
 
+  <!-- Pop-up -->
+  <div id="popup">
+    <div id="popupContent">
+      <h2 style="color:#e91e63;">Yayyyy! 💕</h2>
+      <p>
+        You just made me the happiest person alive.<br>
+        I can’t wait to make beautiful memories with you 🌹
+      </p>
+      <button onclick="closePopup()" style="
+        margin-top:15px;
+        padding:10px 22px;
+        border:none;
+        border-radius:20px;
+        background:#e91e63;
+        color:white;
+        font-size:16px;
+        cursor:pointer;">
+        OK 💖
+      </button>
+    </div>
+  </div>
+
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
+    const popup = document.getElementById("popup");
 
+    // No button dodges
     noBtn.addEventListener("mouseover", () => {
       const x = Math.random() * 200 - 100;
       const y = Math.random() * 200 - 100;
       noBtn.style.transform = `translate(${x}px, ${y}px)`;
     });
 
+    // Yes button action
     yesBtn.addEventListener("click", () => {
+      popup.style.display = "flex";
+
       confetti({ particleCount: 200, spread: 120 });
 
       for (let i = 0; i < 25; i++) {
@@ -111,6 +169,10 @@
         setTimeout(() => rose.remove(), 5000);
       }
     });
+
+    function closePopup() {
+      popup.style.display = "none";
+    }
   </script>
 
 </body>
